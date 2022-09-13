@@ -17,6 +17,11 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+    - name: Cache
+      uses: actions/cache@v3.0.8
+      with:
+        path: /target
+        key: build.cache
     - name: Build
       run: cargo build --verbose
     - name: Run tests
