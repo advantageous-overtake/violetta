@@ -1176,6 +1176,7 @@ dependencies = [
  "mio",
  "num_cpus",
  "once_cell",
+ "parking_lot",
  "pin-project-lite",
  "signal-hook-registry",
  "socket2",
@@ -1390,6 +1391,7 @@ version = "0.1.0"
 dependencies = [
  "rocket",
  "serde",
+ "tokio",
  "uuid",
 ]
 

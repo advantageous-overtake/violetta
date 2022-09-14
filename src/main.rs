@@ -10,9 +10,10 @@ use rocket::{
     request::{FromRequest, Outcome},
     serde::json::Json,
     serde::*,
-    tokio::{fs::File, io::AsyncWriteExt},
     *,
 };
+use tokio::fs::File;
+use tokio::io::AsyncWriteExt;
 use uuid::Uuid;
 
 #[derive(Default)]
@@ -162,6 +163,9 @@ fn not_found() -> Json<UploadResponse> {
 
 #[launch]
 pub fn rocket() -> _ {
+    let current_dir = std::env::current_dir().unwrap();
+    std::fs::create_dir(current_dir.join(relative!("images")))
+        .ok();
     rocket::custom(
         Figment::from(rocket::Config::default())
             .merge(Serialized::defaults(Config::default()))
@@ -173,7 +177,6 @@ pub fn rocket() -> _ {
     .register("/", catchers![not_found, unauthorized, internal_server_err])
     .attach(AdHoc::config::<UploaderConfiguration>())
 }
-
 
 #[cfg(test)]
 mod test {
@@ -202,7 +205,8 @@ mod test {
         let response_body = response.into_json::<UploadResponse>().unwrap();
         assert_eq!(response_body.successful, true);
         assert!(response_body.file_id.is_some());
-        let response = request!(client, get, format!( "/{}", response_body.file_id.unwrap() )).dispatch();
+        let response =
+            request!(client, get, format!("/{}", response_body.file_id.unwrap())).dispatch();
         assert_eq!(response.into_bytes().unwrap().as_slice(), [0u8; 1024]);
     }
 }
