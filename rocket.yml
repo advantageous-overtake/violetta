@@ -1,10 +1,8 @@
 [default]
 address = "0.0.0.0"
-port = 
+port = 8080
 
-[default.tls]
-certs = "path/to/cert-chain.pem"
-key = "path/to/key.pem"
+
 
 [default.limits]
 form = "64 kB"
@@ -22,5 +20,7 @@ mercy = 5
 port = 3000
 
 limits = { json = "10MiB" }
+
 [release]
 port = 8443
+secret_key = "THIS IS A PLACEHOLDER, GENERATE YOUR OWN KEYS."

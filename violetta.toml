@@ -1,0 +1,3 @@
+[default]
+max_size = 16 # in mebibytes [MiB]
+allowed_extensions = [ "png", "jpg", "mp4" ]
