@@ -8,7 +8,7 @@ on:
 
 env:
   CARGO_TERM_COLOR: always
-  RUST_BACKTRACE: 1
+  RUST_BACKTRACE: full
 
 jobs:
   build:
@@ -17,6 +17,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+    - name: Create required directories
+      run: mkdir ~/images
     - name: Build
       run: cargo build --verbose
     - name: Run tests
